@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Realty List</h1>
+    <h2>
+        <a th:href="@{/addhouse}">Add House</a>
+    </h2>
+    <h2>
+        <a th:href="@{/delhouse}">Delete house</a>
+    </h2>
+    <br/><br/>
+    <div class="container">
+        <table class ="container" border="1">
+            <tr>
+                <th><h1>Street</h1></th>
+                <th><h1>House number</h1></th>
+            </tr>
+            <tr th:each ="realty : ${realtyList}">
+                <td th:utext="${realty.getStreet()}">...</td>
+                <td th:utext="${realty.getHouseNumber()}">...</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

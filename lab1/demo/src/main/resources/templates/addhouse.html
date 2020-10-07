@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>New book:</h1>
+    <form th:action="@{/addhouse}"
+          th:object="${realtyform}" method="POST">
+        <p>Street:
+            <input type="text" th:field="*{street}" />
+        </p>
+        <p> House Number:
+            <input type="text" th:field="*{houseNumber}" />
+        </p>
+        <input class ="button-main-page" type="submit" value="Add" />
+    </form>
+</div>
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+</div>
+</body>
+</html>

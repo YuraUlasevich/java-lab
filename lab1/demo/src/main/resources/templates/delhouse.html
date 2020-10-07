@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>New book:</h1>
+    <form id="form1">
+        <p>Street:
+            <input id="street" type="text"  />
+
+        </p>
+        <p> House Number
+            <input id="house" type="text" />
+        </p>
+        <input type="submit" class ="button-main-page" value="Del"/>
+    </form>
+</div>
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+
+</div>
+
+<script>
+    function onSubmit(event) {
+        alert("sad");
+        event.preventDefault();
+        const street = document.getElementById('street').value;
+        const houseNumber = document.getElementById('house').value;
+        fetch('http://localhost:8080/delhouse?' + new URLSearchParams({
+            street,
+            houseNumber
+        }),{
+            method: 'DELETE'
+        });
+        window.open('http://localhost:8080/allrealty');
+    }
+
+    const form = document.getElementById('form1');
+    form.addEventListener('submit', onSubmit);
+</script>
+</body>
+</html>
