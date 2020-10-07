@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.forms.RealtyForm;
+import com.example.demo.forms.RealtyFormPut;
 import com.example.demo.model.Realty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -99,4 +100,40 @@ public class RealtyController {
         model.addAttribute("realtyform", realtyForm);
         return modelAndView;
     }
+
+    @RequestMapping(value = {"/puthouse"}, method = RequestMethod.PUT)
+    public ModelAndView putHouse(Model model,
+                                 @ModelAttribute("realtyform") RealtyFormPut realtyForm) {
+        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("realtylist");
+        boolean flag = false;
+        String street1 = realtyForm.getStreet1();
+        Integer houseNumber1 = realtyForm.getHouseNumber1();
+        String street2 = realtyForm.getStreet2();
+        Integer houseNumber2 = realtyForm.getHouseNumber2();
+        Iterator<Realty> realtyIterator = realtyList.iterator();
+        while (realtyIterator.hasNext()){
+            Realty re = realtyIterator.next();
+            if(re.getStreet().equals(street1) && re.getHouseNumber().equals(houseNumber1)){
+                re.setStreet(street2);
+                re.setHouseNumber(houseNumber2);
+                flag = true;
+            }
+        }
+        if (flag == false){
+            realtyList.add(new Realty(street2, houseNumber2));
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        modelAndView.setViewName("realtylist");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/puthouse"}, method = RequestMethod.GET)
+    public ModelAndView showPutHousePage(Model model) {
+        ModelAndView modelAndView = new ModelAndView("changehouse");
+        RealtyForm realtyForm = new RealtyForm();
+        model.addAttribute("realtyform", realtyForm);
+        return modelAndView;
+    }
+
 }

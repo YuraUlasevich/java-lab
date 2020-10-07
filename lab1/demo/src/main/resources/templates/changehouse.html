@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Change house:</h1>
+        <form id="form1">
+            <p>From Street:
+                <input id="street1" type="text"  />
+            </p>
+            <p>From House Number
+                <input id="house1" type="text" />
+            </p>
+            <p>To From Street:
+                <input id="street2" type="text"  />
+            </p>
+            <p>To From House Number
+                <input id="house2" type="text" />
+            </p>
+            <input type="submit" class ="button-main-page" value="Put"/>
+        </form>
+    </div>
+    <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+    </div>
+    <script>
+        function onSubmit(event) {
+            alert("sad");
+            event.preventDefault();
+            const street1 = document.getElementById('street1').value;
+            const houseNumber1 = document.getElementById('house1').value;
+            const street2 = document.getElementById('street2').value;
+            const houseNumber2 = document.getElementById('house2').value;
+            fetch('http://localhost:8080/puthouse?' + new URLSearchParams({
+                street1,
+                houseNumber1,
+                street2,
+                houseNumber2
+            }),{
+                method: 'PUT'
+            });
+            window.open('http://localhost:8080/allrealty');
+        }
+        const form = document.getElementById('form1');
+        form.addEventListener('submit', onSubmit);
+    </script>
+</body>
+</html>

@@ -9,9 +9,7 @@ public class RealtyForm {
         return houseNumber;
     }
 
-    public String getStreet() {
-        return street;
-    }
+    public String getStreet() { return street; }
 
     public void setStreet(String street) {
         this.street = street;
