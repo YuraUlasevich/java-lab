@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Index</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <form method="post" action="/">
+        <input type="text" name="location" placeholder="Введите локацию" />
+        <input type="checkbox" name="flag" placeholder="Свободен" />
+        <input type="text" name="producer" placeholder="Введите производителя" />
+        <input type="text" name="brand" placeholder="Введите марку" />
+        <input type="number" name="charge_level" placeholder="Введите заряд батареии" />
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<div>
+    <form method="post" action="/filter">
+        <input type="text" name="location" />
+        <button type="submit">Найти</button>
+    </form>
+</div>
+
+<div>Список самокатов</div>
+{{#scooters}}
+    <b>{{id}}</b>
+    <b>{{location}}</b>
+    <b>{{flag}}</>
+    <b>{{producer}}</b>
+    <b>{{brand}}</b>
+    <b>{{chargeLevel}}</b>
+{{/scooters}}
+<br/>
+<a href="/about">About page</a>
+</body>
+</html>
