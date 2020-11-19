@@ -57,7 +57,7 @@ public class ScootersController {
         } else {
             scooters = scootersRepository.findAll();
         }
-        
+
         model.put("scooters", scooters);
         return "index";
     }
