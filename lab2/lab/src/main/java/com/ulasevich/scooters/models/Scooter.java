@@ -1,11 +1,6 @@
-package com.ulasevich.scooters.domain;
+package com.ulasevich.scooters.models;
 
-import javax.persistence.*;
-
-@Entity
-public class Scooters {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Scooter {
     private Integer id;
     private String location;
     private Boolean flag;
@@ -53,22 +48,23 @@ public class Scooters {
         this.brand = brand;
     }
 
-    public Integer getChargeLevel() {
+    public Integer getCharge_level() {
         return charge_level;
     }
 
-    public void setChargeLevel(Integer charge_level) {
+    public void setCharge_level(Integer charge_level) {
         this.charge_level = charge_level;
     }
 
-    public Scooters() {
-    }
-
-    public Scooters(String location, Boolean flag, String producer, String brand, Integer charge_level) {
+    public Scooter(Integer id, String location, Boolean flag, String producer, String brand, Integer charge_level) {
+        this.id = id;
         this.location = location;
         this.flag = flag;
         this.producer = producer;
         this.brand = brand;
         this.charge_level = charge_level;
+    }
+
+    public Scooter() {
     }
 }
