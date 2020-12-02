@@ -24,14 +24,19 @@ public class ScootersController {
         return "about";
     }
 
-    @GetMapping
+    @GetMapping("/")
+    public String scooters(Map<String, Object> model){
+        return "scooters";
+    }
+
+    @GetMapping("/index")
     public String index(Map<String, Object> model){
         Iterable<Scooters> scooters = scootersRepository.findAll();
         model.put("scooters", scooters);
         return "index";
     }
 
-    @PostMapping
+    @PostMapping("/index")
     public String addScooter(@RequestParam String location,
                              @RequestParam Boolean flag,
                              @RequestParam String producer,
@@ -61,6 +66,4 @@ public class ScootersController {
         model.put("scooters", scooters);
         return "index";
     }
-
-
 }

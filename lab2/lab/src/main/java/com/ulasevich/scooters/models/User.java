@@ -1,13 +1,22 @@
 package com.ulasevich.scooters.models;
 
 
+import javax.validation.constraints.Size;
+
 public class User {
     private Integer id;
+
+    @Size(min=2, max=10)
     private String name;
+    @Size(min=2, max=20)
     private String email;
+    @Size(min=6)
     private String login;
+    @Size(min=6)
     private String password;
+    @Size(min=7)
     private String phone;
+    @Size(min=5)
     private String role;
 
     public Integer getId() {

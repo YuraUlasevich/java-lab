@@ -1,11 +1,26 @@
 package com.ulasevich.scooters.models;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 public class Scooter {
     private Integer id;
+
+    @Size(min=2, max=10)
     private String location;
     private Boolean flag;
+
+    @Size(min=2, max=10)
     private String producer;
+
+    @Size(min=2, max=10)
     private String brand;
+
+    @Digits(integer = 3, fraction = 0)
+    @Max(100)
+    @Min(0)
     private Integer charge_level;
 
     public Integer getId() {

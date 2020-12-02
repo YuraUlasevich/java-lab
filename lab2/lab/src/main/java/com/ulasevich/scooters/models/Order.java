@@ -1,9 +1,18 @@
 package com.ulasevich.scooters.models;
 
+import org.springframework.lang.NonNull;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
+
 public class Order {
     private Integer id;
+
+    @Digits(integer=3, fraction = 0)
     private Integer userId;
+    @Digits(integer=3, fraction = 0)
     private Integer scooterId;
+    @Size(min=5, max = 6)
     private String status;
 
     public Integer getId() {
