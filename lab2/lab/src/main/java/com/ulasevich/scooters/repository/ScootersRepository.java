@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ScootersRepository  extends CrudRepository<Scooters, Long> {
     List<Scooters> findByLocation(String location);
+    List<Scooters> findByLocationAndFlag(String location, boolean flag);
 }

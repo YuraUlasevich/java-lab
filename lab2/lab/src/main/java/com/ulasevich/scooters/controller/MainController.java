@@ -4,6 +4,7 @@ import com.ulasevich.scooters.domain.Scooters;
 import com.ulasevich.scooters.repository.ScootersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,9 +30,16 @@ public class MainController {
     }
 
     @GetMapping("/index")
-    public String index(Map<String, Object> model){
+    public String index(@RequestParam(required = false, defaultValue = "") String location, Model model){
         Iterable<Scooters> scooters = scootersRepository.findAll();
-        model.put("scooters", scooters);
+
+        if (location != ""){
+            scooters = scootersRepository.findByLocation(location);
+        } else {
+            scooters = scootersRepository.findAll();
+        }
+
+        model.addAttribute("scooters", scooters);
         return "index";
     }
 
@@ -49,20 +57,6 @@ public class MainController {
         Iterable<Scooters> scooters = scootersRepository.findAll();
         model.put("scooters", scooters);
 
-        return "index";
-    }
-
-    @PostMapping("/filter")
-    public String findScooter(@RequestParam String location,
-                              Map<String, Object> model){
-        Iterable<Scooters> scooters;
-        if (location != null){
-            scooters = scootersRepository.findByLocation(location);
-        } else {
-            scooters = scootersRepository.findAll();
-        }
-
-        model.put("scooters", scooters);
         return "index";
     }
 }

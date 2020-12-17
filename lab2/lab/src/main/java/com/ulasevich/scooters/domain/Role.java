@@ -1,5 +1,11 @@
 package com.ulasevich.scooters.domain;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     USER;
+
+    public String getAuthority() {
+        return name();
+    }
 }
