@@ -1,8 +1,10 @@
 package com.ulasevich.scooters.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name ="usr")
 public class Users {
 
     @Id
@@ -11,10 +13,16 @@ public class Users {
 
     private String name;
     private String email;
-    private String login;
+    private String username;
     private String password;
     private String phone;
-    private String role;
+    private boolean active;
+
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> role;
 
     public Integer getId() {
         return id;
@@ -40,12 +48,12 @@ public class Users {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -64,11 +72,19 @@ public class Users {
         this.phone = phone;
     }
 
-    public String getRole() {
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(Set<Role> roles) {
+        this.role = roles;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
