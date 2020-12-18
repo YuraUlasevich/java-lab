@@ -4,4 +4,5 @@
     <@l.login "/login" />
     <h1>Авторизация</h1>
     <a href="/registration">Registration</a>
+
 </@c.page>

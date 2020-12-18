@@ -13,7 +13,7 @@ public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String name;
     private String email;
@@ -28,11 +28,11 @@ public class Users implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class Users implements UserDetails {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRole();
     }
 
     public String getPassword() {

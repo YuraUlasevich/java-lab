@@ -15,7 +15,7 @@
 
 <div>
     <form method="get" action="/index">
-        <input type="text" name="location""/>
+        <input type="text" name="location"/>
         <button type="submit">Найти</button>
     </form>
 </div>
@@ -36,5 +36,9 @@
 </#list>
 <br/>
 <a href="/about">About page</a>
-<@l.logout />
+    <div>
+        <@l.logout />
+        <span><a href="/user">User list</a></span>
+    </div>
+
 </@c.page>
