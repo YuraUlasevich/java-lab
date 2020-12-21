@@ -21,6 +21,7 @@ public class Users implements UserDetails {
     private String password;
     private String phone;
     private boolean active;
+    private String activationCode;
 
 
 
@@ -31,6 +32,14 @@ public class Users implements UserDetails {
 
     public boolean isAdmin(){
         return role.contains(Role.ADMIN);
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 
     public Long getId() {
