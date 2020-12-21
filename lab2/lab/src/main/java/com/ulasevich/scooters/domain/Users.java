@@ -23,10 +23,15 @@ public class Users implements UserDetails {
     private boolean active;
 
 
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
+
+    public boolean isAdmin(){
+        return role.contains(Role.ADMIN);
+    }
 
     public Long getId() {
         return id;

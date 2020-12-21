@@ -2,6 +2,6 @@
 <@c.page>
     <div>Admin Page</div>
     <a href="/user">Work with users</a>
-    <a href="/scooters">Work with scooters</a>
+    <a href="/scooterwork">Work with scooters</a>
     <a href="/order">Work with order</a>
 </@c.page>
