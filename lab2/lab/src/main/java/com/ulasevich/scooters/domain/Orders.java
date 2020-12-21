@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
 
     private Integer user_id;

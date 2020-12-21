@@ -6,18 +6,18 @@ import javax.persistence.*;
 public class Scooters {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String location;
     private Boolean flag;
     private String producer;
     private String brand;
     private Integer charge_level;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
