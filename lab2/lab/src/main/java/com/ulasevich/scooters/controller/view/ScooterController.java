@@ -1,4 +1,4 @@
-package com.ulasevich.scooters.controller;
+package com.ulasevich.scooters.controller.view;
 
 import com.ulasevich.scooters.domain.Scooters;
 import com.ulasevich.scooters.repository.ScootersRepository;
@@ -23,7 +23,7 @@ public class ScooterController {
 
     @PostMapping
     public String addScooter(@RequestParam String location,
-                             @RequestParam Boolean flag,
+                             @RequestParam String flag,
                              @RequestParam String producer,
                              @RequestParam String brand,
                              @RequestParam Integer charge_level,

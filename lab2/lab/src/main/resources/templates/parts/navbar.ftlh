@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/index">Scooters</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/order">Orders</a>
+                </li>
                 <#if isAdmin>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin">Admin</a>

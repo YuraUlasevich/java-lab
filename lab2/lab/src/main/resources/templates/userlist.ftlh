@@ -1,6 +1,6 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
-    List of users
+    List of user
     <table class="table">
         <thead>
         <tr>

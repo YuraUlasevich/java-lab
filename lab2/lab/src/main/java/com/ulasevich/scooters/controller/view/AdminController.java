@@ -1,4 +1,4 @@
-package com.ulasevich.scooters.controller;
+package com.ulasevich.scooters.controller.view;
 
 import com.ulasevich.scooters.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;

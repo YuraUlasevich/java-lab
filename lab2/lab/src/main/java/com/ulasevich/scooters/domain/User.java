@@ -1,34 +1,51 @@
 package com.ulasevich.scooters.domain;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name ="usr")
-public class Users implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+//    @NotBlank(message = "Please fill name")
+//    @Length(max = 30, message = "To Long")
+//    @Length(min = 2, message = "To Short")
     private String name;
+    @Email(message = "Email is not correct")
+    @NotBlank(message = "Please fill email")
     private String email;
+    @NotBlank(message = "Please fill username")
+    @Length(max = 10, message = "To Long")
+    @Length(min = 2, message = "To Short")
     private String username;
+    @NotBlank(message = "Please fill password")
     private String password;
+
+//    @NotBlank(message = "Please fill phone")
+//    @Length(max = 30, message = "To Long")
+//    @Length(min = 6, message = "To Short")
     private String phone;
     private boolean active;
     private String activationCode;
-
-
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Order> order;
 
     public boolean isAdmin(){
         return role.contains(Role.ADMIN);
@@ -124,5 +141,13 @@ public class Users implements UserDetails {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 }

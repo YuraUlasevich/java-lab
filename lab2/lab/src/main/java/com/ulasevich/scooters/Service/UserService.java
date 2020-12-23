@@ -1,14 +1,13 @@
 package com.ulasevich.scooters.Service;
 
 import com.ulasevich.scooters.domain.Role;
-import com.ulasevich.scooters.domain.Users;
+import com.ulasevich.scooters.domain.User;
 import com.ulasevich.scooters.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,59 +23,61 @@ public class UserService implements UserDetailsService {
     @Autowired
     private MailSender mailSender;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    public String encode(String password){
+        BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+        return bCrypt.encode(password);
+    }
 
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByUsername(username);
     }
 
-    public boolean addUser(Users users){
-        Users usersDB = userRepo.findByUsername(users.getUsername());
+    public boolean addUser(User user){
+        User userDB = userRepo.findByUsername(user.getUsername());
 
-        if (usersDB != null){
+        if (userDB != null){
             return false;
         }
-        users.setActive(true);
-        users.setRole(Collections.singleton(Role.USER));
-        users.setActivationCode(UUID.randomUUID().toString());
-        //users.setPassword(passwordEncoder.encode(users.getPassword()));
-        userRepo.save(users);
+        user.setActive(true);
+        user.setRole(Collections.singleton(Role.USER));
+        user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(encode(user.getPassword()));
+        userRepo.save(user);
 
-        sendMessage(users);
+        sendMessage(user);
         return true;
     }
 
-    private void sendMessage(Users users) {
-        if (!StringUtils.isEmpty(users.getEmail())){
+    private void sendMessage(User user) {
+        if (!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
                     "Hello, %s! \n"+
                             "Welcome to Scooters. Please visit next link: http://localhost:8080/activate/%s",
-                    users.getUsername(), users.getActivationCode()
+                    user.getUsername(), user.getActivationCode()
             );
-            mailSender.send(users.getEmail(), "Activation code", message);
+            mailSender.send(user.getEmail(), "Activation code", message);
         }
     }
 
     public boolean activateUser(String code) {
-        Users users = userRepo.findByActivationCode(code);
+        User user = userRepo.findByActivationCode(code);
 
-        if (users == null){
+        if (user == null){
             return false;
         }
 
-        users.setActivationCode(null);
-        userRepo.save(users);
+        user.setActivationCode(null);
+        userRepo.save(user);
 
         return true;
     }
 
-    public List<Users> findAll() {
+    public List<User> findAll() {
         return userRepo.findAll();
     }
 
-    public void saveUser(Users user, String username, Map<String, String> form) {
+    public void saveUser(User user, String username, Map<String, String> form) {
         user.setUsername(username);
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
@@ -91,7 +92,7 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public void updateProfile(Users user, String password, String email) {
+    public void updateProfile(User user, String password, String email) {
         String userEmail = user.getEmail();
 
         boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||

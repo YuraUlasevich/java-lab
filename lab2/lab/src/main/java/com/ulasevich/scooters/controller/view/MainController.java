@@ -1,15 +1,23 @@
-package com.ulasevich.scooters.controller;
+package com.ulasevich.scooters.controller.view;
 
+import com.ulasevich.scooters.controller.ControllerUtils;
 import com.ulasevich.scooters.domain.Scooters;
 import com.ulasevich.scooters.repository.ScootersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import sun.plugin2.message.Message;
 
+import javax.validation.Valid;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -44,18 +52,24 @@ public class MainController {
     }
 
     @PostMapping("/index")
-    public String addScooter(@RequestParam String location,
-                             @RequestParam Boolean flag,
-                             @RequestParam String producer,
-                             @RequestParam String brand,
-                             @RequestParam Integer charge_level,
-                             Map<String, Object> model){
+    public String addScooter(@RequestParam @Valid Scooters scooters,
+                             BindingResult bindingResult,
+                             Model model){
+        if (bindingResult.hasErrors()){
+            ControllerUtils controllerUtils = new ControllerUtils();
+            Map<String, String> errorsMap = controllerUtils.getErrors(bindingResult);
 
-        Scooters scooter = new Scooters(location, flag, producer, brand, charge_level);
-        scootersRepository.save(scooter);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("scooters", scooters);
 
-        Iterable<Scooters> scooters = scootersRepository.findAll();
-        model.put("scooters", scooters);
+        } else {
+            Scooters scooter = new Scooters(scooters.getLocation(), scooters.getFlag(), scooters.getProducer(), scooters.getBrand(), scooters.getChargeLevel());
+            scootersRepository.save(scooter);
+        }
+
+
+        Iterable<Scooters> scootersc = scootersRepository.findAll();
+        model.addAttribute("scooters", scootersc);
 
         return "index";
     }

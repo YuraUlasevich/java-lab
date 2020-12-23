@@ -1,7 +1,7 @@
-package com.ulasevich.scooters.controller;
+package com.ulasevich.scooters.controller.view;
 
 import com.ulasevich.scooters.Service.UserService;
-import com.ulasevich.scooters.domain.Users;
+import com.ulasevich.scooters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +22,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(Users users, Map<String, Object> model){
+    public String registerUser(User user, Map<String, Object> model){
 
-        if (!userService.addUser(users)){
+        if (!userService.addUser(user)){
             model.put("message", "User exists");
             return "registration";
         }
