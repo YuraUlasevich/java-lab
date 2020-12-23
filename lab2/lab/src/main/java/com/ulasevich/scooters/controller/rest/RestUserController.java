@@ -3,6 +3,7 @@
 //import com.ulasevich.scooters.Service.UserService;
 //import com.ulasevich.scooters.domain.Role;
 //import com.ulasevich.scooters.domain.User;
+//import com.ulasevich.scooters.repository.UserRepo;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,13 +18,16 @@
 //    @Autowired
 //    public UserService userService;
 //
+//    @Autowired
+//    private UserRepo userRepo;
+
 //    @PreAuthorize("hasAuthority('ADMIN')")
 //    @GetMapping
 //    public String userList(Model model){
 //        model.addAttribute("users", userService.findAll());
 //        return "userlist";
 //    }
-//
+
 //    @PreAuthorize("hasAuthority('ADMIN')")
 //    @GetMapping("/{user}")
 //    public String userEditForm(@PathVariable User user, Model model){
@@ -31,14 +35,12 @@
 //        model.addAttribute("role", Role.values());
 //        return "userEdit";
 //    }
-//
+
 //    @PostMapping
 //    public String userSave(
-//            @RequestParam String username,
-//            @RequestParam Map<String, String> form,
-//            @RequestParam("userId") User user){
-//        userService.saveUser(user, username, form);
-//        return "redirect:/user";
+//            @RequestBody User user){
+//
+//        return userRepo.save(user);;
 //    }
 //
 //    @GetMapping("/profile")
