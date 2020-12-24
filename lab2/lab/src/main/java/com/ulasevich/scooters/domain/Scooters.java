@@ -109,4 +109,10 @@ public class Scooters {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "Scooter{"+"id="+this.id+", location='"+this.location+'\''+", flsg='"+this.flag+'\''+", " +
+                "producer='"+this.producer+'\''+", brand='"+this.brand+'\''+", chargeLevel="+this.charge_level+'}';
+    }
 }
