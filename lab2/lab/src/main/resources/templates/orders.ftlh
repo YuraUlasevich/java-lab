@@ -6,7 +6,6 @@
             <b>${scooter.producer}</b>
             <b>${scooter.brand}</b>
             <b>${scooter.chargeLevel}</b>
-            <b>${scooter.flag}</b>
             <br />
         </div>
         <#else>

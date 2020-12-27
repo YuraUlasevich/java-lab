@@ -2,12 +2,13 @@ package com.ulasevich.scooters.controller.view;
 
 import com.ulasevich.scooters.Service.ScooterService;
 import com.ulasevich.scooters.domain.Order;
-import com.ulasevich.scooters.domain.Role;
 import com.ulasevich.scooters.domain.Scooters;
 import com.ulasevich.scooters.domain.User;
 import com.ulasevich.scooters.repository.OrderRepo;
 import com.ulasevich.scooters.repository.ScootersRepository;
 import com.ulasevich.scooters.repository.UserRepo;
+
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+
 
 @Controller
 @RequestMapping("/order")
@@ -55,19 +56,18 @@ public class OrderController {
         if(scootersRepository.existsById(scooterId)){
             scooter = scootersRepository.findById(scooterId).orElse(null);
         }
-        if (scooter.getFlag() != null || scooter.getFlag() !=  "Ordered"){
-            User user1 = userRepo.findByUsername(user.getUsername());
-            scooter.setFlag("Ordered");
 
+        boolean flag = orderRepo.existsByScooterIdAndStatus(scooterId, "Ordered");
+        if (!flag){
+            User user1 = userRepo.findByUsername(user.getUsername());
             Order order = new Order();
             order.setScooter(scooter);
             order.setUser(user1);
-
+            order.setStatus("Ordered");
+            order.setCost(0);
             scootersRepository.save(scooter);
             orderRepo.save(order);
         }
-
-
         return "redirect:/order";
     }
 
@@ -75,37 +75,33 @@ public class OrderController {
     @GetMapping("admin")
     public String orderAdminPage(Map<String, List> model){
         List<Order> orderList = orderRepo.findAll();
-        List<Scooters> scootersList = new ArrayList<>();
-        for (Order order: orderList) {
-            scootersList.add(order.getScooter());
-        }
-        model.put("scooters", scootersList);
+        model.put("orders", orderList);
         return "ordersAdmin";
     }
-
+//ToDo: Переделать
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/admin/{scooterId}")
-    public String userEditForm(@PathVariable Long scooterId, Model model){
-        Scooters scooter = new Scooters();
-        if(scootersRepository.existsById(scooterId)){
-            scooter = scootersRepository.findById(scooterId).orElse(null);
+    @GetMapping("/admin/{orderId}")
+    public String orderEditForm(@PathVariable Long orderId, Model model){
+        Order order = new Order();
+        if(orderRepo.existsById(orderId)){
+            order = orderRepo.findById(orderId).orElse(null);
         }
-        model.addAttribute("scooter", scooter);
+        model.addAttribute("order", order);
         return "orderEdit";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/admin/{scooterId}")
-    public String orderEditForm(@RequestParam String location,
-                                @RequestParam String flag,
-                                @RequestParam Integer charge_level,
-                                @PathVariable Long scooterId){
-        Scooters scooter = new Scooters();
-        if(scootersRepository.existsById(scooterId)){
-            scooter = scootersRepository.findById(scooterId).orElse(null);
+    @PostMapping("/admin/{orderId}")
+    public String orderEditForm(@RequestParam Integer cost,
+                                @RequestParam String status,
+                                @PathVariable Long orderId){
+        Order order = new Order();
+        if(orderRepo.existsById(orderId)){
+            order = orderRepo.findById(orderId).orElse(null);
         }
-        scooterService.saveScooter(location, flag, charge_level, scooter);
-
+        order.setCost(cost);
+        order.setStatus(status);
+        orderRepo.save(order);
         return "redirect:/index";
     }
 

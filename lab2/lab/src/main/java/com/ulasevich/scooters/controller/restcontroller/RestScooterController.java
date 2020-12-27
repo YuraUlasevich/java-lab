@@ -23,14 +23,14 @@ public class RestScooterController {
         List<Scooters> scootersList =  scooterRepo.findAll();
         List<Scooter> scooterList = new ArrayList<>();
         for (Scooters sc:scootersList) {
-            scooterList.add(new Scooter(sc.getLocation(), sc.getFlag(), sc.getProducer(), sc.getBrand(), sc.getChargeLevel()));
+            scooterList.add(new Scooter(sc.getLocation(), sc.getProducer(), sc.getBrand(), sc.getChargeLevel()));
         }
         return scooterList;
     }
 
     @PostMapping(value = "scooters", consumes = "application/json")
     public void createScooter(@RequestBody Scooter sc){
-        Scooters scooter = new Scooters(sc.getLocation(), sc.getFlag(), sc.getProducer(), sc.getBrand(), sc.getCharge_level());
+        Scooters scooter = new Scooters(sc.getLocation(), sc.getProducer(), sc.getBrand(), sc.getCharge_level());
         scooterRepo.save(scooter);
     }
 
@@ -42,8 +42,6 @@ public class RestScooterController {
         }
         if (sc.getLocation() != null && !scooter.getLocation().equals(sc.getLocation()))
             scooter.setLocation(sc.getLocation());
-        if (sc.getFlag() != null && !scooter.getFlag().equals(sc.getFlag()))
-            scooter.setFlag(sc.getFlag());
         if (sc.getProducer() != null && !scooter.getProducer().equals(sc.getProducer()))
             scooter.setProducer(sc.getProducer());
         if (sc.getBrand() != null && !scooter.getBrand().equals(sc.getBrand()))

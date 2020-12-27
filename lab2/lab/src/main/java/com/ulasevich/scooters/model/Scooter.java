@@ -12,7 +12,6 @@ import javax.validation.constraints.Null;
 
 public class Scooter {
     private String location;
-    private String flag;
     private String producer;
     private String brand;
     private Integer charge_level;
@@ -23,14 +22,6 @@ public class Scooter {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
     }
 
     public String getProducer() {
@@ -57,17 +48,15 @@ public class Scooter {
         this.charge_level = charge_level;
     }
 
-    public Scooter(Long id, String location, String flag, String producer, String brand, Integer charge_level) {
+    public Scooter(Long id, String location, String producer, String brand, Integer charge_level) {
         this.location = location;
-        this.flag = flag;
         this.producer = producer;
         this.brand = brand;
         this.charge_level = charge_level;
     }
 
-    public Scooter(String location, String flag, String producer, String brand, Integer charge_level) {
+    public Scooter(String location, String producer, String brand, Integer charge_level) {
         this.location = location;
-        this.flag = flag;
         this.producer = producer;
         this.brand = brand;
         this.charge_level = charge_level;

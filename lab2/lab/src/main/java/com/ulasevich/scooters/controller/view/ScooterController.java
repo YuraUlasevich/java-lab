@@ -23,13 +23,12 @@ public class ScooterController {
 
     @PostMapping
     public String addScooter(@RequestParam String location,
-                             @RequestParam String flag,
                              @RequestParam String producer,
                              @RequestParam String brand,
                              @RequestParam Integer charge_level,
                              Map<String, Object> model){
 
-        Scooters scooter = new Scooters(location, flag, producer, brand, charge_level);
+        Scooters scooter = new Scooters(location, producer, brand, charge_level);
         scooterRepo.save(scooter);
 
         Iterable<Scooters> scooters = scooterRepo.findAll();

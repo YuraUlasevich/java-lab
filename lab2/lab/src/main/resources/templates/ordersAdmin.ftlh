@@ -2,20 +2,21 @@
 
 <@c.page>
 
-    <#list scooters as scooter>
+    <#list orders as order>
         <div>
-            <b>${scooter.location}</b>
-            <b>${scooter.producer}</b>
-            <b>${scooter.brand}</b>
-            <b>${scooter.chargeLevel}</b>
-            <b>${scooter.flag}</b>
+            <b>${order.scooter.location}</b>
+            <b>${order.scooter.producer}</b>
+            <b>${order.scooter.brand}</b>
+            <b>${order.user.username}</b>
+            <b>${order.status}</b>
+            <b>${order.cost}</b>
             <b>
-                <a href="admin/${scooter.id}">Edit</a>
+                <a href="admin/${order.id}">Edit</a>
             </b>
             <br />
         </div>
     <#else>
-        No scooters
+        No orders
     </#list>
 
 </@c.page>

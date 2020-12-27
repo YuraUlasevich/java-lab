@@ -14,9 +14,13 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne
-    @JoinColumn(name="scooter_id", unique = true, nullable = false, updatable = false, referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "scooter_id", nullable = false)
     private Scooters scooter;
+
+    private String status;
+
+    private Integer cost;
 
     public Long getId() {
         return id;
@@ -36,6 +40,22 @@ public class Order {
 
     public Scooters getScooter() {
         return scooter;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getCost() {
+        return cost;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
     }
 
     public void setScooter(Scooters scooter) {

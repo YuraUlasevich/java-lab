@@ -17,9 +17,8 @@ public class ScooterService {
 
     @Autowired
     ScootersRepository scootersRepository;
-    public void saveScooter(String location, String flag, Integer charge_level, Scooters scooter) {
+    public void saveScooter(String location, Integer charge_level, Scooters scooter) {
         scooter.setLocation(location);
-        scooter.setFlag(flag);
         scooter.setCharge_level(charge_level);
         scootersRepository.save(scooter);
     }

@@ -17,7 +17,7 @@ public class Scooters {
     @Length(max = 40, message = "To Long")
     @Length(min = 5, message = "To Short")
     private String location;
-    private String flag;
+
     @NotBlank(message = "Please fill producer")
     @Length(max = 20, message = "To Long")
     @Length(min = 2, message = "To Short")
@@ -32,8 +32,9 @@ public class Scooters {
     private Integer charge_level;
 
 
-    @OneToOne(mappedBy="scooter")
-    private Order order;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "scooter")
+    private List<Order> order;
 
     public Long getId() {
         return id;
@@ -78,13 +79,6 @@ public class Scooters {
     public Scooters() {
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
 
     public Integer getCharge_level() {
         return charge_level;
@@ -94,25 +88,24 @@ public class Scooters {
         this.charge_level = charge_level;
     }
 
-    public Scooters(String location, String flag, String producer, String brand, Integer charge_level) {
+    public Scooters(String location, String producer, String brand, Integer charge_level) {
         this.location = location;
-        this.flag = flag;
         this.producer = producer;
         this.brand = brand;
         this.charge_level = charge_level;
     }
 
-    public Order getOrder() {
+    public List<Order> getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(List<Order> order) {
         this.order = order;
     }
 
     @Override
     public String toString() {
-        return "Scooter{"+"id="+this.id+", location='"+this.location+'\''+", flsg='"+this.flag+'\''+", " +
+        return "Scooter{"+"id="+this.id+", location='"+this.location+'\''+", " +
                 "producer='"+this.producer+'\''+", brand='"+this.brand+'\''+", chargeLevel="+this.charge_level+'}';
     }
 }

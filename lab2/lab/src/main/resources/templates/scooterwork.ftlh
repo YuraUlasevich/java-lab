@@ -10,7 +10,6 @@
                 </div>
             </#if>
             <input type="hidden" name="_csrf" value="${_csrf.token}">
-            <input type="text" name="flag" placeholder="Свободен" />
             <input type="text" name="producer" placeholder="Введите производителя" />
             <input type="text" name="brand" placeholder="Введите марку" />
             <input type="number" name="charge_level" placeholder="Введите заряд батареии" />
