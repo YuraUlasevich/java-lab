@@ -71,7 +71,7 @@ public class OrderController {
         return "redirect:/order";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("admin")
     public String orderAdminPage(Map<String, List> model){
         List<Order> orderList = orderRepo.findAll();
@@ -79,7 +79,7 @@ public class OrderController {
         return "ordersAdmin";
     }
 //ToDo: Переделать
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/admin/{orderId}")
     public String orderEditForm(@PathVariable Long orderId, Model model){
         Order order = new Order();
@@ -90,7 +90,7 @@ public class OrderController {
         return "orderEdit";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/admin/{orderId}")
     public String orderEditForm(@RequestParam Integer cost,
                                 @RequestParam String status,

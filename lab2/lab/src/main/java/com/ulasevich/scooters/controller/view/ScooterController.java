@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/scooterwork")
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class ScooterController {
     @Autowired
     ScootersRepository scooterRepo;

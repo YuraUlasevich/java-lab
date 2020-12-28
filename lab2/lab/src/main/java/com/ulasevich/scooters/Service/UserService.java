@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setActive(true);
-        user.setRole(Collections.singleton(Role.USER));
+        user.setRole(Collections.singleton(Role.ROLE_USER));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(encode(user.getPassword()));
         userRepo.save(user);

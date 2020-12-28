@@ -48,7 +48,7 @@ public class User implements UserDetails {
     private List<Order> order;
 
     public boolean isAdmin(){
-        return role.contains(Role.ADMIN);
+        return role.contains(Role.ROLE_ADMIN);
     }
 
     public String getActivationCode() {

@@ -18,14 +18,14 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public String userList(Model model){
         model.addAttribute("users", userService.findAll());
         return "userlist";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
